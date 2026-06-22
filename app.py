@@ -1,9 +1,8 @@
-
 import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-st.set_page_config(page_title="FosterLink Prototype", page_icon="🤝", layout="wide")
+st.set_page_config(page_title="FosterLink", layout="wide")
 
 if "logs" not in st.session_state:
     st.session_state.logs = [
@@ -17,7 +16,7 @@ if "expenses" not in st.session_state:
     ]
 
 st.title("🤝 FosterLink Portal")
-st.caption("Admin & Case Management Cost-Reduction Engine — Investor Demo Version")
+st.caption("Admin & Case Management Cost-Reduction Engine — Investor Demo")
 st.write("---")
 
 portal_mode = st.sidebar.radio(
@@ -27,7 +26,7 @@ portal_mode = st.sidebar.radio(
 
 if portal_mode == "📱 Foster Carer Mobile View":
     st.header("Foster Carer Portal")
-    st.info("💡 Value Metric: Eliminates 3+ hours of weekly manual paperwork via quick-submit logs.")
+    st.info("💡 Value Metric: Eliminates 3+ hours of weekly manual paperwork.")
     tab1, tab2 = st.tabs(["📝 Daily Log Submission", "💰 Quick Expense Claim"])
     
     with tab1:
@@ -37,12 +36,12 @@ if portal_mode == "📱 Foster Carer Mobile View":
         log_details = st.text_area("Daily Notes / Observations", placeholder="Enter specific observations...")
         if st.button("Securely Submit Log"):
             if log_details.strip() == "":
-                st.error("Please enter log details before submitting.")
+                st.error("Please enter log details.")
             else:
                 st.session_state.logs.append({
                     "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"), "Child": child_selected, "Category": log_category, "Details": log_details, "Status": "Pending Review"
                 })
-                st.success("🔒 Log encrypted and transmitted instantly to Social Worker timeline!")
+                st.success("🔒 Log encrypted and transmitted instantly!")
 
     with tab2:
         st.subheader("Instant Expense Management")
@@ -53,10 +52,10 @@ if portal_mode == "📱 Foster Carer Mobile View":
             st.session_state.expenses.append({
                 "Timestamp": datetime.now().strftime("%Y-%m-%d"), "Child": exp_child, "Amount": exp_amount, "Type": exp_type, "Status": "Pending Review"
             })
-            st.success("💰 Expense sent for automated manager review.")
+            st.success("💰 Expense sent for review.")
 else:
     st.header("Social Worker Auditing Panel")
-    st.info("💡 Value Metric: Cuts desk admin by 40% via live risk flags and bulk spreadsheet exports.")
+    st.info("💡 Value Metric: Cuts desk admin by 40% via live risk flags.")
     col1, col2, col3 = st.columns(3)
     col1.metric(label="Active Placements Monitored", value="1 Child")
     pending_logs_count = sum(1 for l in st.session_state.logs if l["Status"] == "Pending Review")
@@ -79,4 +78,4 @@ else:
             st.rerun()
 
 st.write("---")
-st.caption("🔒 Prototype Framework 
+st.caption("🔒 Prototype Framework Architecture: UK GDPR compliant.")
